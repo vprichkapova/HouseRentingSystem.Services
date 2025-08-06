@@ -2,10 +2,16 @@ pipeline {
     agent any
 
     tools {
-        dotnet 'dotnet6' // Must match the name of the .NET SDK in Jenkins
+        // You can remove this section if you’re not using Maven, JDK, etc.
     }
 
     stages {
+        stage('Check .NET Version') {
+            steps {
+                sh 'dotnet --version'
+            }
+        }
+
         stage('Restore') {
             steps {
                 sh 'dotnet restore'
@@ -14,7 +20,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'dotnet build --configuration Release --no-restore'
+                sh 'dotnet build --no-restore'
             }
         }
 
